@@ -27,7 +27,7 @@ export const useHttpClient = () => {
         );
 
         if (!response.ok) {
-          console.error("Server Response:", responseData); // Log server response
+          console.error("Server Response:", responseData);
           throw new Error(responseData.message || "Failed to login.");
         }
 
@@ -36,7 +36,6 @@ export const useHttpClient = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        console.log(err);
         throw err;
       }
     },
@@ -49,7 +48,6 @@ export const useHttpClient = () => {
 
   useEffect(() => {
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
     };
   }, []);

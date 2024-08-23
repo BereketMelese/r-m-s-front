@@ -1,4 +1,5 @@
-.authentication {
+.authentication,
+form {
   width: 90%;
   max-width: 40rem;
   margin: 5rem auto;
@@ -27,6 +28,12 @@ input:focus {
   border-color: #4a90e2;
   outline: none;
   box-shadow: 0 0 5px #4a90e2;
+}
+
+.Cate {
+  margin: 2rem 0;
+  display: flex;
+  gap: 10px;
 }
 
 h2 {

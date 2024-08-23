@@ -10,21 +10,19 @@ const NavLinks = (props) => {
   return (
     <ul className="nav-links">
       <li>
-        <NavLink to="/" exact>
-          FOODS
-        </NavLink>
+        <NavLink to="/">FOODS</NavLink>
       </li>
-      {auth.isLoggedIn && (
+      {auth.isLoggedIn && auth.role === "admin" && (
         <li>
           <NavLink to={`/category`}>CATEGORY</NavLink>
         </li>
       )}
-      {auth.isLoggedIn && auth.role === "true" && (
+      {auth.isLoggedIn && auth.role === "admin" && (
         <li>
           <NavLink to={`/AddFood`}>ADD FOOD</NavLink>
         </li>
       )}
-      {auth.isLoggedIn && auth.role === "true" && (
+      {auth.isLoggedIn && auth.role === "admin" && (
         <li>
           <NavLink to={`/AddCategory`}>ADD CATEGORY</NavLink>
         </li>

@@ -50,8 +50,9 @@ const Input = (props) => {
     });
   };
 
-  const element =
-    props.element === "input" ? (
+  let element;
+  if (props.element === "input") {
+    element = (
       <input
         id={props.id}
         type={props.type}
@@ -60,7 +61,9 @@ const Input = (props) => {
         onBlur={touchHandler}
         value={inputState.value}
       />
-    ) : (
+    );
+  } else if (props.element === "textarea") {
+    element = (
       <textarea
         id={props.id}
         rows={props.rows || 3}
@@ -69,6 +72,22 @@ const Input = (props) => {
         value={inputState.value}
       />
     );
+  } else if (props.element === "select") {
+    element = (
+      <select
+        id={props.id}
+        name={props.name}
+        onChange={changeHandler}
+        onBlur={touchHandler}
+        value={inputState.value}
+      >
+        <option value="">Select a category</option>
+        {props.options.map((option) => (
+          <option key={option.id}>{option.name}</option>
+        ))}
+      </select>
+    );
+  }
 
   return (
     <div

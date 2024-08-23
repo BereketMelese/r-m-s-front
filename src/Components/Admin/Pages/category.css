@@ -1,0 +1,75 @@
+.categories-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.categories-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.categories-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories-item {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+input,
+span {
+  width: 300px;
+}
+
+.categories-item:hover {
+  transform: translateY(-2px);
+}
+
+.category-name {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.categories-button-update {
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  height: 30px;
+  padding: 0.6rem;
+  background-color: #4caf50;
+  color: white;
+}
+
+.categories-button-update:hover {
+  background-color: #45a049;
+}
+
+.categories-button-delete {
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 0.6rem;
+  height: 30px;
+  background-color: #f44336;
+  color: white;
+}
+
+.categories-button-delete:hover {
+  background-color: #e53935;
+}

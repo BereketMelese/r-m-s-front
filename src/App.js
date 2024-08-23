@@ -1,10 +1,5 @@
 import React, { Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useAuth } from "./Components/Shared/hooks/auth-hook";
 import "./App.css";
 import { AuthContext } from "./Components/Shared/Components/Context/Auth-context";
@@ -13,6 +8,14 @@ import MainNavigation from "./Components/Shared/Components/Navigation/MainNaviga
 const UsersAuth = React.lazy(() => import("./Components/User/Pages/Auth"));
 const AdminsAuth = React.lazy(() => import("./Components/Admin/Pages/Auth"));
 const ChefsAuth = React.lazy(() => import("./Components/Chef/Pages/Auth"));
+const AddCategory = React.lazy(() =>
+  import("./Components/Admin/Pages/AddCategory")
+);
+const AddFood = React.lazy(() => import("./Components/Admin/Pages/AddFood"));
+const Food = React.lazy(() => import("./Components/Food/FoodPage"));
+const Category = React.lazy(() =>
+  import("./Components/Admin/Pages/Categories")
+);
 
 function App() {
   const { token, login, logout, userId, role } = useAuth();
@@ -22,19 +25,10 @@ function App() {
   if (token) {
     routes = (
       <Routes>
-        <Route
-          path="/auth"
-          element={!token ? <UsersAuth /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/Aauth"
-          element={!token ? <AdminsAuth /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/Cauth"
-          element={!token ? <ChefsAuth /> : <Navigate to="/" />}
-        />
-        {/* Other protected routes */}
+        <Route path="/AddCategory" element={<AddCategory />} />
+        <Route path="/AddFood" element={<AddFood />} />
+        <Route path="/" element={<Food />} />
+        <Route path="/category" element={<Category />} />
       </Routes>
     );
   } else {
@@ -43,7 +37,7 @@ function App() {
         <Route path="/auth" element={<UsersAuth />} />
         <Route path="/Aauth" element={<AdminsAuth />} />
         <Route path="/Cauth" element={<ChefsAuth />} />
-        {/* Other public routes */}
+        <Route path="/" element={<Food />} />
       </Routes>
     );
   }
