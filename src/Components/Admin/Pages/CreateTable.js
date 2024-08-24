@@ -42,7 +42,7 @@ const CreateTable = () => {
           onChange={(e) => setTableName(e.target.value)}
           required
         />
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={!tableName}>
           {isLoading ? "Creating" : "Create Table"}
         </button>
       </form>
