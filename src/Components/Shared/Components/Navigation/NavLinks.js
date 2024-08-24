@@ -24,6 +24,11 @@ const NavLinks = (props) => {
       )}
       {auth.isLoggedIn && auth.role === "admin" && (
         <li>
+          <NavLink to={`/AddTable`}>Add Table</NavLink>
+        </li>
+      )}
+      {auth.isLoggedIn && auth.role === "admin" && (
+        <li>
           <NavLink to={`/AddCategory`}>ADD CATEGORY</NavLink>
         </li>
       )}

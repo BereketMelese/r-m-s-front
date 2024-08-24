@@ -40,12 +40,17 @@ const FoodPage = () => {
   };
 
   const handleOrder = async () => {
-    console.log(orderItems);
+    const tableId = prompt(
+      "Please enter the table ID you will get from scanning the Qr Code:"
+    );
+    if (!tableId) {
+      alert("Table ID is required to place an order.");
+    }
 
     try {
       const orderItemNames = orderItems.map((item) => item.name);
       await sendRequest(
-        "http://localhost:5000/api/order",
+        `http://localhost:5000/api/order?tableId=${tableId}`,
         "POST",
         JSON.stringify({
           userId: auth.userId,

@@ -16,6 +16,9 @@ const Food = React.lazy(() => import("./Components/Food/FoodPage"));
 const Category = React.lazy(() =>
   import("./Components/Admin/Pages/Categories")
 );
+const AddTable = React.lazy(() =>
+  import("./Components/Admin/Pages/CreateTable")
+);
 
 function App() {
   const { token, login, logout, userId, role } = useAuth();
@@ -29,6 +32,7 @@ function App() {
         <Route path="/AddFood" element={<AddFood />} />
         <Route path="/" element={<Food />} />
         <Route path="/category" element={<Category />} />
+        <Route path="/AddTable" element={<AddTable />} />
       </Routes>
     );
   } else {

@@ -1,0 +1,52 @@
+.create-table-page {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.create-table-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-table-page form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-table-page label {
+  margin-bottom: 8px;
+}
+
+.create-table-page input {
+  margin-bottom: 12px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.create-table-page button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+}
+
+.create-table-page button:disabled {
+  background-color: #ccc;
+}
+
+.qr-code {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.qr-code img {
+  max-width: 100%;
+  height: auto;
+}
