@@ -29,6 +29,10 @@ const AddFood = () => {
         value: "",
         isValid: false,
       },
+      points: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
@@ -62,6 +66,7 @@ const AddFood = () => {
           price: formState.inputs.price.value,
           image: formState.inputs.image.value,
           categoryName: formState.inputs.categoryName.value,
+          points: formState.inputs.points.value,
         }),
         {
           "Content-type": "application/json",
@@ -100,6 +105,15 @@ const AddFood = () => {
           label="Image URL"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid image URL"
+          onInput={inputHandler}
+        />
+        <Input
+          id="points"
+          element="input"
+          type="number"
+          label="Point"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid point"
           onInput={inputHandler}
         />
         <Input

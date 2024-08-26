@@ -12,7 +12,7 @@ const FoodPage = () => {
   const [foods, setFoods] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [editingFoods, setEditingFoods] = useState(null);
-  //   const id = useParams().id;
+  const [userPoints, setUserPoints] = useState(0);
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -25,8 +25,25 @@ const FoodPage = () => {
         console.log(error);
       }
     };
+
+    const fetchUserPoints = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/users/${auth.userId}`,
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${auth.token}`,
+          }
+        );
+        setUserPoints(responseData.points);
+      } catch (error) {}
+    };
     fetchFoods();
-  }, [sendRequest]);
+    if (auth.isLoggedIn) {
+      fetchUserPoints();
+    }
+  }, [sendRequest, auth.isLoggedIn, auth.userId, auth.token]);
 
   const handleFoodClick = (food) => {
     if (!auth.isLoggedIn) {
@@ -76,7 +93,6 @@ const FoodPage = () => {
   const handleUpdatedFood = async () => {
     try {
       const id = editingFoods._id;
-      console.log(id);
       await sendRequest(
         `http://localhost:5000/api/food/${id}`,
         "PATCH",
@@ -146,12 +162,17 @@ const FoodPage = () => {
       </div>
       <div>
         {auth.isLoggedIn && auth.role !== "admin" && auth.role !== "chef" && (
-          <OrderBox
-            items={orderItems}
-            onRemoveItem={handleRemoveItem}
-            onOrder={handleOrder}
-            totalPrice={totalPrice}
-          />
+          <div className="sticky">
+            <div className="users-poins-container">
+              <h1>Your Points: {userPoints}</h1>
+            </div>
+            <OrderBox
+              items={orderItems}
+              onRemoveItem={handleRemoveItem}
+              onOrder={handleOrder}
+              totalPrice={totalPrice}
+            />
+          </div>
         )}
       </div>
       {auth.role === "admin" && editingFoods && (
