@@ -13,28 +13,27 @@ const NavLinks = (props) => {
         <NavLink to="/">FOODS</NavLink>
       </li>
       {auth.isLoggedIn && auth.role === "admin" && (
-        <li>
-          <NavLink to={`/category`}>CATEGORY</NavLink>
-        </li>
-      )}
-      {auth.isLoggedIn && auth.role === "admin" && (
-        <li>
-          <NavLink to={`/AddFood`}>ADD FOOD</NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to="/category">CATEGORY</NavLink>
+          </li>
+          <li>
+            <NavLink to="/AddFood">ADD FOOD</NavLink>
+          </li>
+          <li>
+            <NavLink to="/AddTable">ADD TABLE</NavLink>
+          </li>
+          <li>
+            <NavLink to="/AddCategory">ADD CATEGORY</NavLink>
+          </li>
+          <li>
+            <NavLink to="/sales">SALES</NavLink>
+          </li>
+        </>
       )}
       {auth.isLoggedIn && (auth.role === "admin" || auth.role === "chef") && (
         <li>
-          <NavLink to={`/Order`}>ORDERS</NavLink>
-        </li>
-      )}
-      {auth.isLoggedIn && auth.role === "admin" && (
-        <li>
-          <NavLink to={`/AddTable`}>ADD TABLE</NavLink>
-        </li>
-      )}
-      {auth.isLoggedIn && auth.role === "admin" && (
-        <li>
-          <NavLink to={`/AddCategory`}>ADD CATEGORY</NavLink>
+          <NavLink to="/Order">ORDERS</NavLink>
         </li>
       )}
       {!auth.isLoggedIn && (

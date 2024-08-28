@@ -17,7 +17,6 @@ const Order = () => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/order"
         );
-        console.log(responseData);
         setOrders(responseData);
       } catch (error) {
         console.log(error);
@@ -51,6 +50,14 @@ const Order = () => {
       alert("Failed to update order status");
     }
   };
+  const renderStatusOptions = () => {
+    if (selectOrder.status === "pending") {
+      return <option value="in_progress">In Progress</option>;
+    } else if (selectOrder.status === "in_progress") {
+      return <option value="completed">Completed</option>;
+    }
+    return null;
+  };
   return (
     <div className="first">
       <h1>Manage Orders</h1>
@@ -77,7 +84,10 @@ const Order = () => {
               <td>{order.status}</td>
               <td>{order.table && order.table.tableId}</td>
               <td>
-                <button onClick={() => setSelectOrder(order)}>
+                <button
+                  onClick={() => setSelectOrder(order)}
+                  disabled={order.status === "completed"}
+                >
                   Change Status
                 </button>
               </td>
@@ -92,11 +102,12 @@ const Order = () => {
             value={newStatus}
           >
             <option value="">Select Status</option>
-            <option value="pending">Pending</option>
-            <option value="in_progress">In Progress</option>
-            <option value="completed">Completed</option>
+            {renderStatusOptions()}
           </select>
-          <button onClick={() => handleStatusChange(selectOrder._id)}>
+          <button
+            onClick={() => handleStatusChange(selectOrder._id)}
+            disabled={!newStatus}
+          >
             Update Status
           </button>
           <button onClick={() => setSelectOrder(null)}>Cancel</button>

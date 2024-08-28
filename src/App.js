@@ -20,6 +20,7 @@ const AddTable = React.lazy(() =>
   import("./Components/Admin/Pages/CreateTable")
 );
 const Orders = React.lazy(() => import("./Components/Admin/Pages/Order"));
+const Sales = React.lazy(() => import("./Components/Admin/Pages/SalesPage"));
 
 function App() {
   const { token, login, logout, userId, role } = useAuth();
@@ -35,6 +36,8 @@ function App() {
         <Route path="/category" element={<Category />} />
         <Route path="/AddTable" element={<AddTable />} />
         <Route path="/Order" element={<Orders />} />
+        <Route path="/sales" element={<Sales />} />
+        <Route path="*" element={<Food />} />
       </Routes>
     );
   } else {
@@ -44,6 +47,7 @@ function App() {
         <Route path="/Aauth" element={<AdminsAuth />} />
         <Route path="/Cauth" element={<ChefsAuth />} />
         <Route path="/" element={<Food />} />
+        <Route path="*" element={<Food />} />
       </Routes>
     );
   }

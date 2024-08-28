@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.sales-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.sales-page h1 {
+  font-size: 2.5rem;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sales-section h2 {
+  font-size: 2rem;
+  color: #333333;
+  border-bottom: 2px solid #333333;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.sales-section input[type="date"],
+.sales-section input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.sales-section input[type="date"]:focus,
+.sales-section input[type="number"]:focus {
+  border-color: #333333;
+  outline: none;
+}
+
+.sales-data {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sales-data p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.sales-section p {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.monthly-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (min-width: 768px) {
+  .monthly-inputs {
+    flex-direction: row;
+    gap: 20px;
+  }
+  .monthly-inputs input {
+    flex: 1;
+  }
+}

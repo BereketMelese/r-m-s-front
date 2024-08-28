@@ -3,8 +3,8 @@ import { AuthContext } from "../Shared/Components/Context/Auth-context";
 import { useHttpClient } from "../Shared/hooks/http-hooks";
 import OrderBox from "./OrderBox";
 import FoodItem from "./FoodItem";
+import RatingModal from "./RatingModal";
 import "./FoodPage.css";
-// import { useParams } from "react-router-dom";
 
 const FoodPage = () => {
   const auth = useContext(AuthContext);
@@ -13,6 +13,8 @@ const FoodPage = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [editingFoods, setEditingFoods] = useState(null);
   const [userPoints, setUserPoints] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -37,7 +39,10 @@ const FoodPage = () => {
           }
         );
         setUserPoints(responseData.points);
-      } catch (error) {}
+        setShowModal(responseData.hasRated);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchFoods();
     if (auth.isLoggedIn) {
@@ -73,6 +78,7 @@ const FoodPage = () => {
           userId: auth.userId,
           foods: orderItemNames,
           totalPrice: totalPrice,
+          usePoints: false,
         }),
         {
           "Content-type": "application/json",
@@ -81,6 +87,48 @@ const FoodPage = () => {
       );
       setOrderItems([]);
       alert("Order placed succesfully");
+      if (showModal === false) {
+        setTimeout(() => {
+          setShowRatingModal(true);
+        }, 30000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePayWithPoints = async () => {
+    const tableId = prompt(
+      "Please enter the table ID you will get from scanning the QR Code:"
+    );
+    if (!tableId) {
+      alert("Table ID is required to place an order.");
+      return;
+    }
+
+    try {
+      const orderItemNames = orderItems.map((item) => item.name);
+      await sendRequest(
+        `http://localhost:5000/api/order?tableId=${tableId}`,
+        "POST",
+        JSON.stringify({
+          userId: auth.userId,
+          foods: orderItemNames,
+          totalPrice: totalPrice,
+          usePoints: true,
+        }),
+        {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        }
+      );
+      setOrderItems([]);
+      alert("Order placed successfully using points");
+      if (!showModal) {
+        setTimeout(() => {
+          setShowRatingModal(true);
+        }, 10000);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -138,6 +186,26 @@ const FoodPage = () => {
     return acc;
   }, {});
 
+  const handleRatingSubmit = async (rating) => {
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/users/rate",
+        "POST",
+        JSON.stringify({
+          userId: auth.userId,
+          rating,
+        }),
+        {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        }
+      );
+      alert("Thank you for your rating!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="food-page">
       <div className="food-list">
@@ -171,6 +239,8 @@ const FoodPage = () => {
               onRemoveItem={handleRemoveItem}
               onOrder={handleOrder}
               totalPrice={totalPrice}
+              userPoints={userPoints}
+              onPayWithPoints={handlePayWithPoints}
             />
           </div>
         )}
@@ -202,6 +272,12 @@ const FoodPage = () => {
           <button onClick={handleUpdatedFood}>Update Food</button>
           <button onClick={() => setEditingFoods(null)}>Cancel</button>
         </div>
+      )}
+      {showRatingModal && (
+        <RatingModal
+          onClose={() => setShowRatingModal(false)}
+          onSubmit={handleRatingSubmit}
+        />
       )}
     </div>
   );
