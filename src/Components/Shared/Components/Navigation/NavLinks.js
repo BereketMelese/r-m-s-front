@@ -29,6 +29,9 @@ const NavLinks = (props) => {
           <li>
             <NavLink to="/sales">SALES</NavLink>
           </li>
+          <li>
+            <NavLink to="/settings">SETTING</NavLink>
+          </li>
         </>
       )}
       {auth.isLoggedIn && (auth.role === "admin" || auth.role === "chef") && (

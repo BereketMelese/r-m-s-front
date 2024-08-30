@@ -15,6 +15,10 @@ const FoodPage = () => {
   const [userPoints, setUserPoints] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showRatingModal, setShowRatingModal] = useState(false);
+  const [settings, setSettings] = useState({
+    payWithPointsEnabled: true,
+    pointMultiplier: 1,
+  });
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -44,7 +48,21 @@ const FoodPage = () => {
         console.log(error);
       }
     };
+
+    const fetchSettings = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/points/settings/",
+          "GET"
+        );
+        setSettings(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchFoods();
+    fetchSettings();
     if (auth.isLoggedIn) {
       fetchUserPoints();
     }
@@ -206,6 +224,11 @@ const FoodPage = () => {
     }
   };
 
+  const handleRatingModalClose = () => {
+    handleRatingSubmit(5);
+    setShowRatingModal(false);
+  };
+
   return (
     <div className="food-page">
       <div className="food-list">
@@ -241,6 +264,8 @@ const FoodPage = () => {
               totalPrice={totalPrice}
               userPoints={userPoints}
               onPayWithPoints={handlePayWithPoints}
+              pointMultiplier={settings.pointMultiplier}
+              payWithPointsEnabled={settings.payWithPointsEnabled}
             />
           </div>
         )}
@@ -275,7 +300,7 @@ const FoodPage = () => {
       )}
       {showRatingModal && (
         <RatingModal
-          onClose={() => setShowRatingModal(false)}
+          onClose={handleRatingModalClose}
           onSubmit={handleRatingSubmit}
         />
       )}

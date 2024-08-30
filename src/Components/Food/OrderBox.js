@@ -7,8 +7,10 @@ const OrderBox = ({
   totalPrice,
   userPoints,
   onPayWithPoints,
+  pointMultiplier,
+  payWithPointsEnabled,
 }) => {
-  const pointsRequired = totalPrice * 6;
+  const pointsRequired = totalPrice * pointMultiplier;
   return (
     <div className="order-box">
       <h3>Your Order</h3>
@@ -23,11 +25,17 @@ const OrderBox = ({
         ))}
       </ul>
       <div className="total-price">Total: ${totalPrice.toFixed(2)}</div>
-      <h3>Total Points Required: {pointsRequired}</h3>
-      {userPoints >= pointsRequired ? (
-        <button onClick={onPayWithPoints}>Pay with Points</button>
+      {payWithPointsEnabled ? (
+        userPoints >= pointsRequired ? (
+          <>
+            <h3>Total Points Required: {pointsRequired}</h3>
+            <button onClick={onPayWithPoints}>Pay with Points</button>
+          </>
+        ) : (
+          <p>Not enough points to pay for the order.</p>
+        )
       ) : (
-        <p>Not enough points to pay for the order.</p>
+        <p>Pay with Points is disabled.</p>
       )}
       <button onClick={onOrder}>Place Order</button>
     </div>

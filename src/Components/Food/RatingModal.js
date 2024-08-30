@@ -9,7 +9,14 @@ const RatingModal = ({ onClose, onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    onSubmit(rating);
+    onSubmit(rating || 5);
+    onClose();
+  };
+
+  const handleClose = () => {
+    if (rating === 0) {
+      onSubmit(5);
+    }
     onClose();
   };
   return (
@@ -28,7 +35,7 @@ const RatingModal = ({ onClose, onSubmit }) => {
           ))}
         </div>
         <button onClick={handleSubmit}>Submit Rating</button>
-        <button onClick={onClose}>Close</button>
+        <button onClick={handleClose}>Close</button>
       </div>
     </div>
   );
