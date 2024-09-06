@@ -109,6 +109,12 @@
   max-height: 45px;
 }
 
+/* In your CSS file (e.g., styles.css) */
+.btn-outline-custom:hover {
+  color: var(--primary);
+  outline: none;
+}
+
 @media (max-width: 991.98px) {
   .sticky-top.navbar-dark {
     position: relative;

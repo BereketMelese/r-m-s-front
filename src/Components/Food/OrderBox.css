@@ -1,0 +1,63 @@
+.order-box {
+  width: 80%; /* Increased width */
+  max-width: 800px; /* Optional, to limit the width */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: black;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.order-box h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.order-box ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.order-box li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-box .total-price {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.order-box button {
+  padding: 10px 15px;
+  margin-left: 20px;
+  background-color: #fea116;
+  filter: brightness(0.8);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-box button:hover {
+  filter: brightness(1.2);
+}
+
+.order-box p {
+  color: #fff;
+}
+
+.order-box .points-message {
+  margin-top: 20px;
+  font-size: 14px;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import "./OrderBox.css";
 
 const OrderBox = ({
   items,
@@ -20,7 +21,9 @@ const OrderBox = ({
             <span>
               {item.name} - ${item.price.toFixed(2)}
             </span>
-            <button onClick={() => onRemoveItem(index)}>Remove</button>
+            <button onClick={() => onRemoveItem(index)} className="one">
+              Remove
+            </button>
           </li>
         ))}
       </ul>

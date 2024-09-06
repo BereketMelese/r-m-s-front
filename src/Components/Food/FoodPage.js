@@ -4,7 +4,9 @@ import { useHttpClient } from "../Shared/hooks/http-hooks";
 import OrderBox from "./OrderBox";
 import FoodItem from "./FoodItem";
 import RatingModal from "./RatingModal";
-import "./FoodPage.css";
+import Header from "../Shared/Components/Header";
+import Footer from "../Shared/Components/Footer";
+import Modal from "./Modal";
 
 const FoodPage = () => {
   const auth = useContext(AuthContext);
@@ -19,6 +21,10 @@ const FoodPage = () => {
     payWithPointsEnabled: true,
     pointMultiplier: 1,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -230,43 +236,66 @@ const FoodPage = () => {
   };
 
   return (
-    <div className="food-page">
+    <div className="container-xxl bg-white p-0">
+      <Header page="Menu" />
       <div className="food-list">
         {isLoading && <p>Loading...</p>}
         {Object.keys(groupedFoods).map((category) => (
-          <div key={category} className="food-category">
-            <h2 className="category-title">{category}</h2>
-            <div className="food-items-wrap">
-              {groupedFoods[category].map((food) => (
-                <FoodItem
-                  key={food._id}
-                  food={food}
-                  onClick={() => handleFoodClick(food)}
-                  isAdmin={auth.role === "admin"}
-                  onUpdate={() => setEditingFoods(food)}
-                  onDelete={() => handleDeletedFood(food._id)}
-                />
-              ))}
+          <>
+            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+              <h5 className="section-title ff-secondary text-center text-primary fw-normal">
+                Food Menu
+              </h5>
+              <h1 className="mb-5">Most Popular Items</h1>
             </div>
-          </div>
+            <div
+              className="tab-class text-center wow fadeInUp"
+              data-wow-delay="0.1s"
+              key={category}
+            >
+              <div className="nav nav-pills d-inline-flex justify-content-center mb-5">
+                <div className="ps-3">
+                  <h2 className="mt-n1 mb-0 text-primary">{category}</h2>
+                </div>
+              </div>
+              <div className="">
+                {groupedFoods[category].map((food) => (
+                  <FoodItem
+                    key={food._id}
+                    food={food}
+                    onClick={() => handleFoodClick(food)}
+                    isAdmin={auth.role === "admin"}
+                    onUpdate={() => setEditingFoods(food)}
+                    onDelete={() => handleDeletedFood(food._id)}
+                  />
+                ))}
+              </div>
+            </div>
+          </>
         ))}
       </div>
       <div>
         {auth.isLoggedIn && auth.role !== "admin" && auth.role !== "chef" && (
           <div className="sticky">
-            <div className="users-poins-container">
-              <h1>Your Points: {userPoints}</h1>
-            </div>
-            <OrderBox
-              items={orderItems}
-              onRemoveItem={handleRemoveItem}
-              onOrder={handleOrder}
-              totalPrice={totalPrice}
-              userPoints={userPoints}
-              onPayWithPoints={handlePayWithPoints}
-              pointMultiplier={settings.pointMultiplier}
-              payWithPointsEnabled={settings.payWithPointsEnabled}
-            />
+            <button className="fixed-button" onClick={openModal}>
+              +
+            </button>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+              <h2>Order Details</h2>
+              <div className="users-poins-container">
+                <h1>Your Points: {userPoints}</h1>
+              </div>
+              <OrderBox
+                items={orderItems}
+                onRemoveItem={handleRemoveItem}
+                onOrder={handleOrder}
+                totalPrice={totalPrice}
+                userPoints={userPoints}
+                onPayWithPoints={handlePayWithPoints}
+                pointMultiplier={settings.pointMultiplier}
+                payWithPointsEnabled={settings.payWithPointsEnabled}
+              />
+            </Modal>
           </div>
         )}
       </div>
@@ -304,6 +333,7 @@ const FoodPage = () => {
           onSubmit={handleRatingSubmit}
         />
       )}
+      <Footer />
     </div>
   );
 };

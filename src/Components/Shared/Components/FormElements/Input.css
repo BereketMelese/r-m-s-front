@@ -1,41 +1,95 @@
-.form-control {
-  margin: 1rem 0;
+/* General Form Control */
+.control {
+  margin-bottom: 16px;
+  position: relative;
+  border: none;
+  box-shadow: none;
 }
 
-.form-control label,
-.form-control input,
-.form-control textarea {
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
   display: block;
 }
 
-.form-control label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.form-control input,
-.form-control textarea {
+/* Input and Textarea Styling */
+.control input,
+.control textarea,
+.control select {
   width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  padding: 0.15rem 0.25rem;
-}
-
-.form-control input:focus,
-.form-control textarea:focus {
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff; /* White background color */
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   outline: none;
-  background: #ebebeb;
-  border-color: #510077;
 }
 
-.form-control--invalid label,
-.form-control--invalid p {
-  color: red;
+/* Focus State */
+.control input:focus,
+.control textarea:focus,
+.control select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
 }
 
-.form-control--invalid input,
-.form-control--invalid textarea {
-  border-color: red;
-  background: #ffd1d1;
+/* Placeholder Styling */
+.control input::placeholder,
+.control textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Select Dropdown Styling */
+.control select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;base64,..."); /* Add a custom arrow here */
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+/* Invalid State */
+.control--invalid input,
+.control--invalid textarea,
+.control--invalid select {
+  border-color: #e74c3c;
+  background-color: #fbeae9; /* Light red background for errors */
+}
+
+/* Error Text Styling */
+.control--invalid p {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  position: absolute;
+  bottom: -18px;
+}
+
+/* Textarea Specific Styling */
+.control textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Transition for Invalid and Focus States */
+.control input,
+.control textarea,
+.control select {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Disabled State */
+.control input:disabled,
+.control textarea:disabled,
+.control select:disabled {
+  background-color: #e9ecef; /* Light gray for disabled state */
+  cursor: not-allowed;
+  border-color: #ccc;
 }
