@@ -49,33 +49,45 @@ const Settings = () => {
           "Content-Type": "application/json",
         }
       );
-      alert("Setting updated successfully!");
+      alert("Settings updated successfully!");
     } catch (error) {
-      console.error("Failed to update settinfs", error);
+      console.error("Failed to update settings", error);
     }
   };
+
   return (
-    <div className="admin-settings-page">
-      <h2>Admin Settings</h2>
-      <div className="settings-item">
-        <label>
-          <input
-            type="checkbox"
-            checked={settings.payWithPointsEnabled}
-            onChange={handleToggleSettings}
-          />
-        </label>
-        <label>
-          Point Multiplier:
+    <div className="settings-container">
+      <h1 className="settings-title">Admin Settings</h1>
+      <div className="settings-card">
+        <div className="settings-item">
+          <label className="settings-label">Pay with Points</label>
+          <div className="toggle-switch">
+            <input
+              type="checkbox"
+              className="toggle-checkbox"
+              id="togglePoints"
+              checked={settings.payWithPointsEnabled}
+              onChange={handleToggleSettings}
+            />
+            <label className="toggle-label" htmlFor="togglePoints"></label>
+          </div>
+        </div>
+
+        <div className="settings-item">
+          <label className="settings-label">Point Multiplier</label>
           <input
             type="number"
+            className="settings-input"
             value={settings.pointMultiplier}
             onChange={handleMultiplierChange}
             min={1}
           />
-        </label>
+        </div>
+
+        <button className="settings-button" onClick={handleSaveSettings}>
+          Save Changes
+        </button>
       </div>
-      <button onClick={handleSaveSettings}>Save Setting</button>
     </div>
   );
 };

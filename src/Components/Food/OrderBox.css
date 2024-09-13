@@ -1,6 +1,6 @@
 .order-box {
-  width: 80%; /* Increased width */
-  max-width: 800px; /* Optional, to limit the width */
+  width: 100%;
+  max-width: 800px;
   margin: 20px auto;
   padding: 20px;
   background-color: black;
@@ -32,9 +32,39 @@
   border-bottom: 1px solid #ddd;
 }
 
+.order-box li span {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.order-box .quantity {
+  display: inline-block;
+  margin: 0 8px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #fea116;
+  padding: 2px 8px;
+  border-radius: 8px;
+  color: black;
+}
+
+.order-box .multiply-symbol {
+  font-size: 22px;
+  color: #fea116;
+  margin: 0 5px;
+  display: inline-block;
+}
+
+.order-box .total {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .order-box .total-price {
   font-weight: bold;
   margin-top: 20px;
+  font-size: 20px;
 }
 
 .order-box button {
@@ -60,4 +90,19 @@
 .order-box .points-message {
   margin-top: 20px;
   font-size: 14px;
+}
+
+/* New Styles for Quantity and 'x' Symbol */
+.order-box .quantity {
+  background-color: #fea116;
+  padding: 3px 10px;
+  border-radius: 5px;
+  color: #000;
+  font-weight: bold;
+}
+
+.order-box .multiply-symbol {
+  font-size: 20px;
+  color: #fea116;
+  margin: 0 5px;
 }

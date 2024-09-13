@@ -7,13 +7,15 @@ import RatingModal from "./RatingModal";
 import Header from "../Shared/Components/Header";
 import Footer from "../Shared/Components/Footer";
 import Modal from "./Modal";
+import FoodModal from "./FoodModal";
+import { useNavigate } from "react-router-dom";
 
 const FoodPage = () => {
   const auth = useContext(AuthContext);
   const { isLoading, sendRequest } = useHttpClient();
   const [foods, setFoods] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
-  const [editingFoods, setEditingFoods] = useState(null);
+  const navigate = useNavigate();
   const [userPoints, setUserPoints] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showRatingModal, setShowRatingModal] = useState(false);
@@ -25,6 +27,19 @@ const FoodPage = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const [showFoodModal, setShowFoodModal] = useState(false);
+  const [selectedFood, setSelectedFood] = useState(null);
+  const handleOpenModal = (food) => {
+    console.log("Opening modal with food:", food);
+    setSelectedFood(food);
+    setShowFoodModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowFoodModal(false);
+    setSelectedFood(null);
+  };
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -74,14 +89,25 @@ const FoodPage = () => {
     }
   }, [sendRequest, auth.isLoggedIn, auth.userId, auth.token]);
 
-  const handleFoodClick = (food) => {
+  const handleFoodClick = (food, quantity) => {
     if (!auth.isLoggedIn) {
-      alert("Please log in to order food.");
+      navigate("/auth");
       return;
     }
 
     if (auth.role !== "admin" && auth.role !== "chef") {
-      setOrderItems((prevItems) => [...prevItems, food]);
+      setOrderItems((prevItems) => {
+        const existingItem = prevItems.find((item) => item._id === food._id);
+
+        if (existingItem) {
+          return prevItems.map((item) =>
+            item._id === food._id
+              ? { ...item, quantity: item.quantity + quantity }
+              : item
+          );
+        }
+        return [...prevItems, { ...food, quantity }];
+      });
     }
   };
 
@@ -94,13 +120,16 @@ const FoodPage = () => {
     }
 
     try {
-      const orderItemNames = orderItems.map((item) => item.name);
+      const orderItemWithQuantity = orderItems.map((item) => ({
+        name: item.name,
+        quantity: item.quantity,
+      }));
       await sendRequest(
         `http://localhost:5000/api/order?tableId=${tableId}`,
         "POST",
         JSON.stringify({
           userId: auth.userId,
-          foods: orderItemNames,
+          foods: orderItemWithQuantity,
           totalPrice: totalPrice,
           usePoints: false,
         }),
@@ -109,6 +138,8 @@ const FoodPage = () => {
           Authorization: `Bearer ${auth.token}`,
         }
       );
+      console.log(orderItemWithQuantity);
+
       setOrderItems([]);
       alert("Order placed succesfully");
       if (showModal === false) {
@@ -162,46 +193,10 @@ const FoodPage = () => {
     setOrderItems((prevItems) => prevItems.filter((_, i) => i !== index));
   };
 
-  const handleUpdatedFood = async () => {
-    try {
-      const id = editingFoods._id;
-      await sendRequest(
-        `http://localhost:5000/api/food/${id}`,
-        "PATCH",
-        JSON.stringify({
-          name: editingFoods.name,
-          image: editingFoods.image,
-          price: editingFoods.price,
-        }),
-        {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      setEditingFoods(null);
-      alert("Food updated Succesfully!");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDeletedFood = async (foodId) => {
-    try {
-      await sendRequest(
-        `http://localhost:5000/api/food/${foodId}`,
-        "DELETE",
-        null,
-        {
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      setFoods((prevFoods) => prevFoods.filter((food) => food.id !== foodId));
-      alert("Food was deleted successfully");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const totalPrice = orderItems.reduce((total, item) => total + item.price, 0);
+  const totalPrice = orderItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   const groupedFoods = foods.reduce((acc, food) => {
     const categoryName = food.category.name;
@@ -260,14 +255,21 @@ const FoodPage = () => {
               </div>
               <div className="">
                 {groupedFoods[category].map((food) => (
-                  <FoodItem
-                    key={food._id}
-                    food={food}
-                    onClick={() => handleFoodClick(food)}
-                    isAdmin={auth.role === "admin"}
-                    onUpdate={() => setEditingFoods(food)}
-                    onDelete={() => handleDeletedFood(food._id)}
-                  />
+                  <>
+                    <FoodItem
+                      key={food._id}
+                      food={food}
+                      onClick={() => handleOpenModal(food)}
+                    />
+                    {showFoodModal && (
+                      <FoodModal
+                        show={showModal}
+                        handleClose={handleCloseModal}
+                        food={selectedFood}
+                        handleConfirmOrder={handleFoodClick}
+                      />
+                    )}
+                  </>
                 ))}
               </div>
             </div>
@@ -299,34 +301,6 @@ const FoodPage = () => {
           </div>
         )}
       </div>
-      {auth.role === "admin" && editingFoods && (
-        <div className="edit-food">
-          <h3>Edit Food Item</h3>
-          <input
-            type="text"
-            value={editingFoods.name}
-            onChange={(e) =>
-              setEditingFoods({ ...editingFoods, name: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            value={editingFoods.price}
-            onChange={(e) =>
-              setEditingFoods({ ...editingFoods, price: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            value={editingFoods.image}
-            onChange={(e) =>
-              setEditingFoods({ ...editingFoods, image: e.target.value })
-            }
-          />
-          <button onClick={handleUpdatedFood}>Update Food</button>
-          <button onClick={() => setEditingFoods(null)}>Cancel</button>
-        </div>
-      )}
       {showRatingModal && (
         <RatingModal
           onClose={handleRatingModalClose}

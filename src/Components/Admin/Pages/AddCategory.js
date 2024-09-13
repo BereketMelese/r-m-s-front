@@ -4,9 +4,9 @@ import Button from "../../Shared/Components/FormElements/Button";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
 import { VALIDATOR_REQUIRE } from "../../Shared/Util/validators";
 import { useForm } from "../../Shared/hooks/form-hook";
-
 import "../../Shared/styles.css";
 import { AuthContext } from "../../Shared/Components/Context/Auth-context";
+import "./AddCategory.css"; // Adding new CSS file for styling
 
 const AddCategory = () => {
   const auth = useContext(AuthContext);
@@ -35,23 +35,26 @@ const AddCategory = () => {
       );
     } catch (error) {}
   };
+
   return (
-    <div>
-      <h2>Add New Category</h2>
-      <form onSubmit={submitHandler}>
-        <Input
-          id="name"
-          element="input"
-          type="text"
-          label="Category Name"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid category name."
-          onInput={inputHandler}
-        />
-        <Button type="submit" disabled={!formState.isValid}>
-          ADD CATEGORY
-        </Button>
-      </form>
+    <div className="add-category-container">
+      <div className="form-wrapper">
+        <h2 className="form-title">Add New Category</h2>
+        <form onSubmit={submitHandler}>
+          <Input
+            id="name"
+            element="input"
+            type="text"
+            label="Category Name"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid category name."
+            onInput={inputHandler}
+          />
+          <Button type="submit" disabled={!formState.isValid}>
+            ADD CATEGORY
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

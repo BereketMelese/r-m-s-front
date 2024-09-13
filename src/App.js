@@ -1,9 +1,11 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import { useAuth } from "./Components/Shared/hooks/auth-hook";
 import "./App.css";
 import { AuthContext } from "./Components/Shared/Components/Context/Auth-context";
 import NavLinks from "./Components/Shared/Components/Navigation/NavLinks.js";
+import Sidebar from "./Components/Admin/Pages/Sidebar.jsx";
 
 const UsersAuth = React.lazy(() => import("./Components/User/Pages/Auth"));
 const AdminsAuth = React.lazy(() => import("./Components/Admin/Pages/Auth"));
@@ -33,6 +35,14 @@ const Service = React.lazy(() =>
   import("./Components/Shared/pages/Service.jsx")
 );
 
+const DashBoard = React.lazy(() =>
+  import("./Components/Admin/Pages/Dashboard.jsx")
+);
+
+const FoodDashboard = React.lazy(() =>
+  import("./Components/Admin/Pages/FoodDashboard.jsx")
+);
+
 function App() {
   const { token, login, logout, userId, role } = useAuth();
 
@@ -45,7 +55,7 @@ function App() {
         <Route path="/AddCategory" element={<AddCategory />} />
         <Route path="/AddFood" element={<AddFood />} />
         <Route path="/Food" element={<Food />} />
-        <Route path="/category" element={<Category />} />
+        <Route path="/categories" element={<Category />} />
         <Route path="/AddTable" element={<AddTable />} />
         <Route path="/Order" element={<Orders />} />
         <Route path="/sales" element={<Sales />} />
@@ -53,7 +63,9 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/Service" element={<Service />} />
         <Route path="/Contact" element={<Contact />} />
-        <Route path="*" element={<Home />} />
+        <Route path="/Dashboard" element={<DashBoard />} />
+        <Route path="/FoodDashboard" element={<FoodDashboard />} />
+        <Route path="*" element={role === "admin" ? <DashBoard /> : <Home />} />
       </Routes>
     );
   } else {
@@ -84,7 +96,8 @@ function App() {
       }}
     >
       <Router>
-        <NavLinks />
+        {(!token || (token && role !== "admin")) && <NavLinks />}
+        {token && role === "admin" && <Sidebar />}
         <main>
           <Suspense>{routes}</Suspense>
         </main>

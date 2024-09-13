@@ -17,7 +17,6 @@ const NavLinks = (props) => {
         <h1 className="text-primary m-1">
           <i className="fa fa-utensils me-3"></i>Bite & Bliss
         </h1>
-        {/* <img src="img/logo.png" alt="Logo"> */}
       </NavLink>
       <button
         className="navbar-toggler"
@@ -29,42 +28,56 @@ const NavLinks = (props) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarCollapse">
         <div className="navbar-nav ms-auto py-0 pe-4">
-          <NavLink
+          {!(auth.isLoggedIn && auth.role === "admin") && (
+            <NavLink
+              to="/"
+              className={`nav-item nav-link ${isActive("/") ? "active" : ""}`}
+            >
+              HOME
+            </NavLink>
+          )}
+          {/* <NavLink
             to="/"
             className={`nav-item nav-link ${isActive("/") ? "active" : ""}`}
           >
             HOME
-          </NavLink>
-          <NavLink
-            to="/Food"
-            className={`nav-item nav-link ${isActive("/Food") ? "active" : ""}`}
-          >
-            FOOD
-          </NavLink>
-          <NavLink
-            to="/About"
-            className={`nav-item nav-link ${
-              isActive("/About") ? "active" : ""
-            }`}
-          >
-            ABOUT
-          </NavLink>
-          <NavLink
-            to="/Service"
-            className={`nav-item nav-link ${
-              isActive("/Service") ? "active" : ""
-            }`}
-          >
-            SERVICE
-          </NavLink>
-          <NavLink
-            to="/Contact"
-            className={`nav-item nav-link ${
-              isActive("/Contact") ? "active" : ""
-            }`}
-          >
-            CONTACT
-          </NavLink>
+          </NavLink> */}
+          {((auth.isLoggedIn && auth.role === "user") || !auth.isLoggedIn) && (
+            <>
+              <NavLink
+                to="/Food"
+                className={`nav-item nav-link ${
+                  isActive("/Food") ? "active" : ""
+                }`}
+              >
+                FOOD
+              </NavLink>
+              <NavLink
+                to="/About"
+                className={`nav-item nav-link ${
+                  isActive("/About") ? "active" : ""
+                }`}
+              >
+                ABOUT
+              </NavLink>
+              <NavLink
+                to="/Service"
+                className={`nav-item nav-link ${
+                  isActive("/Service") ? "active" : ""
+                }`}
+              >
+                SERVICE
+              </NavLink>
+              <NavLink
+                to="/Contact"
+                className={`nav-item nav-link ${
+                  isActive("/Contact") ? "active" : ""
+                }`}
+              >
+                CONTACT
+              </NavLink>
+            </>
+          )}
           {auth.isLoggedIn && auth.role === "admin" && (
             <>
               <NavLink
@@ -83,6 +96,15 @@ const NavLinks = (props) => {
                 }`}
               >
                 ADD FOOD
+              </NavLink>
+
+              <NavLink
+                to="/DashBoard"
+                className={`nav-item nav-link ${
+                  isActive("/DashBoard") ? "active" : ""
+                }`}
+              >
+                DashBoard
               </NavLink>
 
               <NavLink
@@ -140,7 +162,7 @@ const NavLinks = (props) => {
                 isActive("/auth") ? "active" : ""
               }`}
             >
-              AUTHENTICATE
+              LOGIN
             </NavLink>
           )}
           {auth.isLoggedIn && (

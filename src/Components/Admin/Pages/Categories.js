@@ -6,7 +6,7 @@ import "./category.css";
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [editingCategory, setEditingCategory] = useState(null);
-  const [newName, SetNewName] = useState("");
+  const [newName, setNewName] = useState("");
   const { isLoading, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
@@ -16,14 +16,9 @@ const Categories = () => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/category"
         );
-        if (Array.isArray(responseData)) {
-          setCategories(responseData);
-        } else {
-          setCategories([]);
-          console.error("Expected array but got:", responseData);
-        }
+        setCategories(Array.isArray(responseData) ? responseData : []);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch categories:", error);
       }
     };
     fetchCategories();
@@ -47,7 +42,7 @@ const Categories = () => {
       );
       setEditingCategory(null);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to update category:", error);
     }
   };
 
@@ -65,57 +60,68 @@ const Categories = () => {
         prevCategories.filter((cat) => cat._id !== categoryId)
       );
     } catch (error) {
-      console.log(error);
+      console.error("Failed to delete category:", error);
     }
   };
+
   return (
     <div className="category-container">
       <h1 className="categories-title">Manage Categories</h1>
-      {isLoading && <p>Loading...</p>}
-      {!isLoading && categories.length > 0 && (
+      {isLoading && <p className="loading-message">Loading categories...</p>}
+      {!isLoading && categories.length > 0 ? (
         <ul className="categories-list">
           {categories.map((category) => (
-            <li key={category._id} className="categories-item">
+            <li key={category._id} className="category-card">
               {editingCategory === category._id ? (
-                <>
+                <div className="edit-container">
                   <input
                     type="text"
                     value={newName}
-                    onChange={(e) => SetNewName(e.target.value)}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="category-input"
                   />
-                  <button
-                    onClick={() => handleUpdateCategories(category._id)}
-                    className="categories-button-update"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => setEditingCategory(null)}
-                    className="categories-button-delete"
-                  >
-                    Cancel
-                  </button>
-                </>
+                  <div className="edit-actions">
+                    <button
+                      onClick={() => handleUpdateCategories(category._id)}
+                      className="action-btn save-btn"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingCategory(null)}
+                      className="action-btn cancel-btn"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
               ) : (
-                <>
+                <div className="category-content">
                   <span className="category-name">{category.name}</span>
-                  <button
-                    onClick={() => setEditingCategory(category._id)}
-                    className="categories-button-update"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCategory(category._id)}
-                    className="categories-button-delete"
-                  >
-                    Delete
-                  </button>
-                </>
+                  <div className="category-actions">
+                    <button
+                      onClick={() => {
+                        setEditingCategory(category._id);
+                        setNewName(category.name);
+                      }}
+                      className="action-btn edit-btn"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCategory(category._id)}
+                      className="action-btn delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               )}
             </li>
           ))}
         </ul>
+      ) : (
+        !isLoading && <p className="no-categories">No categories found</p>
       )}
     </div>
   );

@@ -18,6 +18,7 @@ const Order = () => {
           "http://localhost:5000/api/order"
         );
         setOrders(responseData);
+        console.log(responseData);
       } catch (error) {
         console.log(error);
       }
@@ -79,7 +80,11 @@ const Order = () => {
             <tr key={order._id}>
               <td>{order._id}</td>
               <td>{order.user.username}</td>
-              <td>{order.foods.map((food) => food.name).join(", ")}</td>
+              <td>
+                {order.foods
+                  .map((food) => `${food.foodId?.name} (x${food.quantity})`)
+                  .join(", ")}
+              </td>
               <td>{order.totalPrice}</td>
               <td>{order.status}</td>
               <td>{order.table && order.table.tableId}</td>

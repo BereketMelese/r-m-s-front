@@ -20,6 +20,9 @@ const OrderBox = ({
           <li key="item.index">
             <span>
               {item.name} - ${item.price.toFixed(2)}
+              <span className="multiply-symbol">x</span>
+              <span className="quantity">{item.quantity}</span> = $
+              {(item.price * item.quantity).toFixed(2)}
             </span>
             <button onClick={() => onRemoveItem(index)} className="one">
               Remove
