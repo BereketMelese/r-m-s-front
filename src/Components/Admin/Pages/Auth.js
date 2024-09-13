@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Shared/Components/Context/Auth-context";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
 import { useForm } from "../../Shared/hooks/form-hook";
-import Card from "../../Shared/Components/Ui/Card";
 import Input from "../../Shared/Components/FormElements/Input";
 import Button from "../../Shared/Components/FormElements/Button";
 import {
@@ -16,7 +15,7 @@ import "../../Shared/styles.css";
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { isLoading, sendRequest } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -107,50 +106,88 @@ const Auth = () => {
     }
   };
   return (
-    <React.Fragment>
-      <Card className="authentication">
-        {isLoading}
-        <h2>Login Requires</h2>
-        <hr />
-        <form onSubmit={authSubmitHandler}>
-          {!isLoginMode && (
-            <Input
-              element="input"
-              id="name"
-              type="text"
-              label="Your Name"
-              validators={[VALIDATOR_REQUIRE()]}
-              error="Please enter a name."
-              onInput={inputHandler}
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="row g-0">
+          {/* Image on the left */}
+          <div className="col-lg-6 auth-image d-none d-lg-block">
+            <img
+              src="https://www.wallpapertip.com/wmimgs/54-549498_high-resolution-wallpaper-food.jpg"
+              alt="Food"
+              className="img-fluid"
             />
-          )}
-          <Input
-            element="input"
-            id="email"
-            type="email"
-            label="E-Mail"
-            validators={[VALIDATOR_EMAIL()]}
-            error="Please enter a valid email address."
-            onInput={inputHandler}
-          />
-          <Input
-            element="input"
-            id="password"
-            type="password"
-            label="Password"
-            validators={[VALIDATOR_MINLENGTH(6)]}
-            errorText="Please enter a valid password, at least 6 characters."
-            onInput={inputHandler}
-          />
-          <Button type="submit" disabled={!formState.isValid}>
-            {isLoginMode ? "LOGIN" : "SIGNUP"}
-          </Button>
-        </form>
-        <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
-        </Button>
-      </Card>
-    </React.Fragment>
+          </div>
+
+          {/* Form on the right */}
+          <div className="col-lg-6 d-flex align-items-center one">
+            <div className="auth-form p-5">
+              <h2 className="mb-4 text-center">
+                {isLoginMode ? "Welcome to Bite & Bliss" : "Join Bite & Bliss"}
+              </h2>
+              <form onSubmit={authSubmitHandler}>
+                {!isLoginMode && (
+                  <div className="box">
+                    <Input
+                      label="Name"
+                      element="input"
+                      id="name"
+                      type="text"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please enter your name."
+                      onInput={inputHandler}
+                    />
+                  </div>
+                )}
+                <div className="box">
+                  <Input
+                    label="Email Address"
+                    element="input"
+                    id="email"
+                    type="email"
+                    validators={[VALIDATOR_EMAIL()]}
+                    errorText="Please enter a valid email."
+                    onInput={inputHandler}
+                  />
+                </div>
+                <div className="box">
+                  <Input
+                    label="Password"
+                    element="input"
+                    id="password"
+                    type="password"
+                    validators={[VALIDATOR_MINLENGTH(6)]}
+                    errorText="Please enter at least 6 characters."
+                    onInput={inputHandler}
+                  />
+                </div>
+                <div className="d-grid mt-4">
+                  <Button
+                    type="submit"
+                    disabled={!formState.isValid}
+                    className="btn btn-primary rounded-pill"
+                  >
+                    {isLoginMode ? "Login" : "Sign Up"}
+                  </Button>
+                </div>
+              </form>
+
+              <div className="text-center mt-3">
+                <Button
+                  type="button"
+                  inverse
+                  onClick={switchModeHandler}
+                  className="btn btn-link"
+                >
+                  {isLoginMode
+                    ? "Create an account"
+                    : "Already have an account?"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
