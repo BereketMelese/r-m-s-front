@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "../../Shared/Components/Context/Auth-context";
 import { useContext } from "react";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
+import "react-toastify/dist/ReactToastify.css";
+import "../../Food/TosdtContainer.css";
 import "./order.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const Order = () => {
   const { isLoading, sendRequest } = useHttpClient();
@@ -43,12 +46,12 @@ const Order = () => {
       );
 
       setSelectOrder(null);
-      alert("Order status updated successfully");
+      toast.success("Order status updated successfully");
       const responseData = await sendRequest("http://localhost:5000/api/order");
       setOrders(responseData);
     } catch (error) {
       console.log(error);
-      alert("Failed to update order status");
+      toast.error("Failed to update order status");
     }
   };
   const renderStatusOptions = () => {
@@ -118,6 +121,7 @@ const Order = () => {
           <button onClick={() => setSelectOrder(null)}>Cancel</button>
         </div>
       )}
+      <ToastContainer position="top-right" className="toast-container" />
     </div>
   );
 };

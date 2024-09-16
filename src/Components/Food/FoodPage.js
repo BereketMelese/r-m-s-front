@@ -9,6 +9,9 @@ import Footer from "../Shared/Components/Footer";
 import Modal from "./Modal";
 import FoodModal from "./FoodModal";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./TosdtContainer.css";
 
 const FoodPage = () => {
   const auth = useContext(AuthContext);
@@ -19,6 +22,7 @@ const FoodPage = () => {
   const [userPoints, setUserPoints] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showRatingModal, setShowRatingModal] = useState(false);
+  const [tableId, setTableId] = useState("");
   const [settings, setSettings] = useState({
     payWithPointsEnabled: true,
     pointMultiplier: 1,
@@ -111,14 +115,7 @@ const FoodPage = () => {
     }
   };
 
-  const handleOrder = async () => {
-    const tableId = prompt(
-      "Please enter the table ID you will get from scanning the Qr Code:"
-    );
-    if (!tableId) {
-      alert("Table ID is required to place an order.");
-    }
-
+  const handleOrder = async (tableId) => {
     try {
       const orderItemWithQuantity = orderItems.map((item) => ({
         name: item.name,
@@ -138,10 +135,10 @@ const FoodPage = () => {
           Authorization: `Bearer ${auth.token}`,
         }
       );
-      console.log(orderItemWithQuantity);
-
       setOrderItems([]);
-      alert("Order placed succesfully");
+      setTableId("");
+      toast.success("Order placed successfully");
+
       if (showModal === false) {
         setTimeout(() => {
           setShowRatingModal(true);
@@ -152,12 +149,9 @@ const FoodPage = () => {
     }
   };
 
-  const handlePayWithPoints = async () => {
-    const tableId = prompt(
-      "Please enter the table ID you will get from scanning the QR Code:"
-    );
+  const handlePayWithPoints = async (tableId) => {
     if (!tableId) {
-      alert("Table ID is required to place an order.");
+      toast.error("Table ID is required to place an order.");
       return;
     }
 
@@ -178,7 +172,9 @@ const FoodPage = () => {
         }
       );
       setOrderItems([]);
-      alert("Order placed successfully using points");
+      setTableId("");
+      toast.success("Order placed successfully using points");
+
       if (!showModal) {
         setTimeout(() => {
           setShowRatingModal(true);
@@ -219,7 +215,7 @@ const FoodPage = () => {
           Authorization: `Bearer ${auth.token}`,
         }
       );
-      alert("Thank you for your rating!");
+      toast.success("Thank you for your rating!");
     } catch (error) {
       console.log(error);
     }
@@ -296,6 +292,8 @@ const FoodPage = () => {
                 onPayWithPoints={handlePayWithPoints}
                 pointMultiplier={settings.pointMultiplier}
                 payWithPointsEnabled={settings.payWithPointsEnabled}
+                tableId={tableId}
+                setTableId={setTableId}
               />
             </Modal>
           </div>
@@ -308,6 +306,7 @@ const FoodPage = () => {
         />
       )}
       <Footer />
+      <ToastContainer position="top-right" className="toast-container" />
     </div>
   );
 };

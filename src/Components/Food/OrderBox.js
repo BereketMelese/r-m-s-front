@@ -10,8 +10,24 @@ const OrderBox = ({
   onPayWithPoints,
   pointMultiplier,
   payWithPointsEnabled,
+  tableId,
+  setTableId,
 }) => {
   const pointsRequired = totalPrice * pointMultiplier;
+
+  const handleOrderClick = () => {
+    if (!tableId) {
+      return;
+    }
+    onOrder(tableId);
+  };
+
+  const handlePayWithPointsClick = () => {
+    if (!tableId) {
+      return;
+    }
+    onPayWithPoints(tableId);
+  };
   return (
     <div className="order-box">
       <h3>Your Order</h3>
@@ -30,12 +46,29 @@ const OrderBox = ({
           </li>
         ))}
       </ul>
-      <div className="total-price">Total: ${totalPrice.toFixed(2)}</div>
+      <div className="total-price">Total: ${totalPrice.toFixed(2)}</div>{" "}
+      <div className="table-id-container">
+        <label htmlFor="tableId">Table ID:</label>
+        <input
+          type="text"
+          id="tableId"
+          autoComplete="off"
+          value={tableId}
+          onChange={(e) => setTableId(e.target.value)}
+          placeholder="Enter Table ID"
+          required
+        />
+      </div>
       {payWithPointsEnabled ? (
         userPoints >= pointsRequired ? (
           <>
             <h3>Total Points Required: {pointsRequired}</h3>
-            <button onClick={onPayWithPoints}>Pay with Points</button>
+            <button
+              onClick={handlePayWithPointsClick}
+              disabled={!tableId || userPoints < pointsRequired}
+            >
+              Pay with Points
+            </button>
           </>
         ) : (
           <p>Not enough points to pay for the order.</p>
@@ -43,7 +76,9 @@ const OrderBox = ({
       ) : (
         <p>Pay with Points is disabled.</p>
       )}
-      <button onClick={onOrder}>Place Order</button>
+      <button onClick={handleOrderClick} disabled={!tableId}>
+        Place Order
+      </button>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Shared/Components/Context/Auth-context";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
 import { useForm } from "../../Shared/hooks/form-hook";
-import Card from "../../Shared/Components/Ui/Card";
 import Input from "../../Shared/Components/FormElements/Input";
 import Button from "../../Shared/Components/FormElements/Button";
 import {
@@ -15,7 +14,7 @@ import "../../Shared/styles.css";
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { isLoading, sendRequest } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {

@@ -76,11 +76,15 @@
 
 .subMenu {
   list-style: none;
+  width: 100%;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .subMenuLink {
   display: flex;
+  align-items: center;
   padding: 10px 20px;
   color: #ccc;
   text-decoration: none;
@@ -88,8 +92,18 @@
   transition: background 0.3s ease;
 }
 
-.subMenuLink:hover {
-  background: #555;
+.subMenuLinks {
+  display: flex;
+  align-items: center;
+  padding: 3px 25px;
+  margin-left: 25px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+li {
+  list-style: none;
 }
 
 .subMenu.hide {

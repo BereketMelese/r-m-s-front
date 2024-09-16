@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import styles from "./Dashboard.module.css";
+import { useHttpClient } from "../../Shared/hooks/http-hooks";
 
 ChartJS.register(
   LineElement,
@@ -23,6 +24,30 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const { sendRequest } = useHttpClient();
+  const [totalUsers, setTotalUsers] = useState();
+  const [totalOrder, setTotalOrder] = useState();
+  const [totalFood, setTotalfood] = useState();
+  const [totalRevenue, setTotalRevenue] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responeData = await sendRequest(
+          "http://localhost:5000/api/dashboard/data"
+        );
+        const data = responeData;
+        setTotalfood(data.totalFoods);
+        setTotalOrder(data.totalOrders);
+        setTotalUsers(data.totalUsers);
+        setTotalRevenue(data.totalRevenue);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [sendRequest]);
   // Data for the line chart
   const data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -83,29 +108,29 @@ const Dashboard = () => {
           <div className={styles.widget}>
             <i className="fa fa-wallet"></i>
             <div className={styles.widgetContent}>
-              <h3>$58,947</h3>
+              <h3>${totalRevenue}</h3>
               <p>Total Revenue</p>
             </div>
           </div>
           <div className={styles.widget}>
-            <i className="fa fa-basket"></i>
+            <i className="fa fa-shopping-cart"></i>
             <div className={styles.widgetContent}>
-              <h3>1,845</h3>
+              <h3>{totalOrder}</h3>
               <p>Orders</p>
             </div>
           </div>
           <div className={styles.widget}>
-            <i className="fa fa-store"></i>
+            <i className="fa fa-utensils"></i>
             <div className={styles.widgetContent}>
-              <h3>825</h3>
-              <p>Stores</p>
+              <h3>{totalFood}</h3>
+              <p>Foods</p>
             </div>
           </div>
           <div className={styles.widget}>
             <i className="fa fa-users"></i>
             <div className={styles.widgetContent}>
-              <h3>2,430</h3>
-              <p>Sellers</p>
+              <h3>{totalUsers}</h3>
+              <p>Users</p>
             </div>
           </div>
         </div>
@@ -133,7 +158,7 @@ const Dashboard = () => {
       </main>
 
       <footer className={styles.footer}>
-        <p>&copy; {new Date().getFullYear()} Your Company</p>
+        <p>&copy; {new Date().getFullYear()} Bit & Bliss</p>
       </footer>
     </div>
   );

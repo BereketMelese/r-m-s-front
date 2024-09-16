@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
 import "./settings.css";
+import "react-toastify/dist/ReactToastify.css";
+import "../../Food/TosdtContainer.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const Settings = () => {
   const { sendRequest } = useHttpClient();
@@ -49,7 +52,7 @@ const Settings = () => {
           "Content-Type": "application/json",
         }
       );
-      alert("Settings updated successfully!");
+      toast.success("Settings updated successfully!");
     } catch (error) {
       console.error("Failed to update settings", error);
     }
@@ -88,6 +91,7 @@ const Settings = () => {
           Save Changes
         </button>
       </div>
+      <ToastContainer position="top-right" className="toast-container" />
     </div>
   );
 };

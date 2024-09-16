@@ -93,7 +93,7 @@ const SalesPage = () => {
   const dailySalesPieChartSeries = dailySales
     ? [
         dailySales.totalRevenue || 0,
-        (dailySales.totalRevenue % 10) * 10 - dailySales.totalRevenue,
+        (dailySales.totalRevenue % 10) * 10 + dailySales.totalRevenue,
       ] // Ensure proper default value
     : [0, 1];
 
@@ -137,7 +137,7 @@ const SalesPage = () => {
   const monthlySalesPieChartSeries = monthlySales
     ? [
         monthlySales.totalRevenue || 0,
-        (monthlySales.totalRevenue % 10) * 10 - monthlySales.totalRevenue,
+        (monthlySales.totalRevenue % 10) * 10 + monthlySales.totalRevenue,
       ]
     : [0, 1];
 

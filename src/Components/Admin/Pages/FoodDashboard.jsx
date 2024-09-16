@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
 import { AuthContext } from "../../Shared/Components/Context/Auth-context";
+import "react-toastify/dist/ReactToastify.css";
+import "../../Food/TosdtContainer.css";
+import { toast, ToastContainer } from "react-toastify";
 import "./FoodDashboard.css";
 
 const FoodDashboard = () => {
@@ -38,7 +41,7 @@ const FoodDashboard = () => {
         }
       );
       setFoods((prevFoods) => prevFoods.filter((food) => food.id !== foodId));
-      alert("Food was deleted successfully");
+      toast.success("Food was deleted successfully");
     } catch (error) {
       console.log(error);
     }
@@ -152,6 +155,7 @@ const FoodDashboard = () => {
           </form>
         </div>
       )}
+      <ToastContainer position="top-right" className="toast-container" />
     </div>
   );
 };

@@ -1,6 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useHttpClient } from "../../Shared/hooks/http-hooks";
 import { AuthContext } from "../../Shared/Components/Context/Auth-context";
+
+import "react-toastify/dist/ReactToastify.css";
+import "../../Food/TosdtContainer.css";
+import { toast, ToastContainer } from "react-toastify";
 import "./Table.css";
 
 const CreateTable = () => {
@@ -27,7 +31,7 @@ const CreateTable = () => {
       setTableName("");
     } catch (error) {
       console.log(error);
-      alert("Error creating table");
+      toast.error("Error creating table");
     }
   };
 
@@ -58,6 +62,7 @@ const CreateTable = () => {
           </div>
         )}
       </div>
+      <ToastContainer position="top-right" className="toast-container" />
     </div>
   );
 };

@@ -79,6 +79,13 @@
   transition: background-color 0.3s ease;
 }
 
+button:disabled,
+button[disabled] {
+  background-color: #ccc; /* Gray background */
+  color: #6c757d; /* Darker gray text */
+  cursor: not-allowed; /* Change cursor to indicate disabled state */
+  opacity: 0.65; /* Slightly transparent */
+}
 .order-box button:hover {
   filter: brightness(1.2);
 }
@@ -92,7 +99,6 @@
   font-size: 14px;
 }
 
-/* New Styles for Quantity and 'x' Symbol */
 .order-box .quantity {
   background-color: #fea116;
   padding: 3px 10px;
