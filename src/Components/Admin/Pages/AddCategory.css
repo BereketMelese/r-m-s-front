@@ -61,11 +61,20 @@ button[disabled] {
 }
 
 @media (max-width: 768px) {
+  .add-category-container {
+    margin-left: 0;
+  }
+
   .form-wrapper {
-    padding: 20px;
+    padding: 1.5rem;
   }
 
   .form-title {
     font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.65rem;
   }
 }

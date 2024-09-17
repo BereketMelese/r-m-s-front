@@ -64,16 +64,14 @@
   transition: box-shadow 0.3s ease;
 }
 
-/* Media query for mobile screens */
 @media (max-width: 768px) {
   .auth-card {
     flex-direction: column;
-    box-shadow: none; /* Reduce shadow for mobile */
-    background-color: #ed9106;
+    box-shadow: none;
   }
 
   .auth-image {
-    display: none; /* Hide image on mobile */
+    display: none;
   }
 
   .auth-form {

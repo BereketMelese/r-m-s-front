@@ -49,6 +49,16 @@ tbody tr:hover {
   background-color: #e9ecef;
 }
 
+/* Status update row styling */
+.status-update-row {
+  background-color: #f8f9fa;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 button {
   background-color: #007bff;
   color: #fff;
@@ -65,18 +75,10 @@ button:hover {
   transform: scale(1.05);
 }
 
-button:focus {
-  outline: none;
-}
-
-button:disabled,
-button:hover:disabled,
-button:active:disabled {
+button:disabled {
   background: #ccc;
   color: #979797;
-  border-color: #ccc;
   cursor: not-allowed;
-  transform: none;
 }
 
 select {
@@ -86,29 +88,20 @@ select {
   margin-right: 15px;
 }
 
-.second {
-  margin-top: 30px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f8f9fa;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-evenly;
-}
+@media (max-width: 768px) {
+  .first {
+    margin-left: 0;
+    padding: 10px;
+  }
 
-h2 {
-  margin-top: 0;
-  font-size: 1.75em;
-  color: #343a40;
-}
+  th,
+  td {
+    padding: 10px;
+    font-size: 14px;
+  }
 
-/* Loading text */
-p {
-  font-size: 1.2em;
-  color: #6c757d;
-  text-align: center;
+  button {
+    padding: 8px 16px;
+    font-size: 0.8em;
+  }
 }

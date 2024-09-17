@@ -1,3 +1,4 @@
+/* SalesPage.css */
 body {
   font-family: Arial, sans-serif;
   color: #333;
@@ -14,15 +15,19 @@ body {
 
 .sales-page h1 {
   font-size: 2.5rem;
-  color: #333333;
+  color: #333;
   text-align: center;
   margin-bottom: 20px;
 }
 
+.sales-section {
+  margin-bottom: 40px;
+}
+
 .sales-section h2 {
   font-size: 2rem;
-  color: #333333;
-  border-bottom: 2px solid #333333;
+  color: #333;
+  border-bottom: 2px solid #333;
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
@@ -39,7 +44,7 @@ body {
 
 .sales-section input[type="date"]:focus,
 .sales-section input[type="number"]:focus {
-  border-color: #333333;
+  border-color: #333;
   outline: none;
 }
 
@@ -75,5 +80,28 @@ body {
   }
   .monthly-inputs input {
     flex: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    margin-left: 0;
+  }
+
+  .sales-page h1 {
+    font-size: 2rem;
+  }
+
+  .sales-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .sales-section input[type="date"],
+  .sales-section input[type="number"] {
+    font-size: 0.9rem;
+  }
+
+  .sales-data p {
+    font-size: 1rem;
   }
 }

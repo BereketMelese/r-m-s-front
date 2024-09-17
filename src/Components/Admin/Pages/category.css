@@ -126,3 +126,39 @@
 .delete-btn:hover {
   background-color: #c82333;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .category-container {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .category-name {
+    font-size: 16px;
+  }
+
+  .action-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .category-container {
+    padding: 10px;
+  }
+
+  .category-card {
+    padding: 8px;
+  }
+
+  .category-name {
+    font-size: 14px;
+  }
+
+  .action-btn {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+}

@@ -21,7 +21,6 @@ const Order = () => {
           "http://localhost:5000/api/order"
         );
         setOrders(responseData);
-        console.log(responseData);
       } catch (error) {
         console.log(error);
       }
@@ -54,18 +53,20 @@ const Order = () => {
       toast.error("Failed to update order status");
     }
   };
+
   const renderStatusOptions = () => {
-    if (selectOrder.status === "pending") {
+    if (selectOrder?.status === "pending") {
       return <option value="in_progress">In Progress</option>;
-    } else if (selectOrder.status === "in_progress") {
+    } else if (selectOrder?.status === "in_progress") {
       return <option value="completed">Completed</option>;
     }
     return null;
   };
+
   return (
     <div className="first">
       <h1>Manage Orders</h1>
-      {isLoading && <p>Loading</p>}
+      {isLoading && <p>Loading...</p>}
       <table>
         <thead>
           <tr>
@@ -80,47 +81,51 @@ const Order = () => {
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order._id}</td>
-              <td>{order.user.username}</td>
-              <td>
-                {order.foods
-                  .map((food) => `${food.foodId?.name} (x${food.quantity})`)
-                  .join(", ")}
-              </td>
-              <td>{order.totalPrice}</td>
-              <td>{order.status}</td>
-              <td>{order.table && order.table.tableId}</td>
-              <td>
-                <button
-                  onClick={() => setSelectOrder(order)}
-                  disabled={order.status === "completed"}
-                >
-                  Change Status
-                </button>
-              </td>
-            </tr>
+            <React.Fragment key={order._id}>
+              <tr>
+                <td>{order._id}</td>
+                <td>{order.user.username}</td>
+                <td>
+                  {order.foods
+                    .map((food) => `${food.foodId?.name} (x${food.quantity})`)
+                    .join(", ")}
+                </td>
+                <td>{order.totalPrice}</td>
+                <td>{order.status}</td>
+                <td>{order.table && order.table.tableId}</td>
+                <td>
+                  <button
+                    onClick={() => setSelectOrder(order)}
+                    disabled={order.status === "completed"}
+                  >
+                    Change Status
+                  </button>
+                </td>
+              </tr>
+              {selectOrder && selectOrder._id === order._id && (
+                <tr>
+                  <td colSpan="7" className="status-update-row">
+                    <select
+                      onChange={(e) => setNewStatus(e.target.value)}
+                      value={newStatus}
+                    >
+                      <option value="">Select Status</option>
+                      {renderStatusOptions()}
+                    </select>
+                    <button
+                      onClick={() => handleStatusChange(selectOrder._id)}
+                      disabled={!newStatus}
+                    >
+                      Update Status
+                    </button>
+                    <button onClick={() => setSelectOrder(null)}>Cancel</button>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
         </tbody>
       </table>
-      {selectOrder && (
-        <div className="second">
-          <select
-            onChange={(e) => setNewStatus(e.target.value)}
-            value={newStatus}
-          >
-            <option value="">Select Status</option>
-            {renderStatusOptions()}
-          </select>
-          <button
-            onClick={() => handleStatusChange(selectOrder._id)}
-            disabled={!newStatus}
-          >
-            Update Status
-          </button>
-          <button onClick={() => setSelectOrder(null)}>Cancel</button>
-        </div>
-      )}
       <ToastContainer position="top-right" className="toast-container" />
     </div>
   );

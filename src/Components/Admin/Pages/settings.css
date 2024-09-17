@@ -1,46 +1,47 @@
 .settings-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f9f9f9;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
   margin-left: 300px;
 }
 
 .settings-title {
-  font-size: 2rem;
-  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2em;
   color: #333;
+  margin-bottom: 20px;
 }
 
 .settings-card {
-  background-color: #fff;
+  background-color: #f8f9fa;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .settings-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 15px;
 }
 
 .settings-label {
-  font-size: 1.1rem;
-  color: #555;
+  font-size: 1.2em;
+  color: #333;
+  flex-basis: 70%;
 }
 
 .settings-input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  width: 80px;
-  text-align: center;
-  font-size: 1rem;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100px;
+  font-size: 1em;
 }
 
 .settings-button {
@@ -60,38 +61,32 @@
 
 .toggle-switch {
   position: relative;
-  width: 50px;
-  height: 25px;
 }
 
 .toggle-checkbox {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  display: none;
 }
 
 .toggle-label {
-  position: absolute;
-  cursor: pointer;
-  background-color: #ccc;
-  border-radius: 50px;
+  position: relative;
   width: 50px;
-  height: 25px;
-  top: 0;
-  left: 0;
-  transition: background-color 0.3s;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .toggle-label::before {
   content: "";
   position: absolute;
-  width: 21px;
-  height: 21px;
-  background-color: white;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
   border-radius: 50%;
-  left: 2px;
-  bottom: 2px;
-  transition: 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .toggle-checkbox:checked + .toggle-label {
@@ -99,5 +94,48 @@
 }
 
 .toggle-checkbox:checked + .toggle-label::before {
-  transform: translateX(25px);
+  transform: translateX(24px);
+}
+
+.settings-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.settings-button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
+  .settings-container {
+    margin-left: 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .settings-title {
+    font-size: 1.5em;
+  }
+
+  .settings-label {
+    font-size: 1em;
+  }
+
+  .settings-input {
+    font-size: 0.9em;
+  }
+
+  .settings-button {
+    font-size: 0.9em;
+  }
 }

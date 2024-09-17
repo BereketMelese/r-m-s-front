@@ -40,7 +40,7 @@ const FoodDashboard = () => {
           Authorization: `Bearer ${auth.token}`,
         }
       );
-      setFoods((prevFoods) => prevFoods.filter((food) => food.id !== foodId));
+      setFoods((prevFoods) => prevFoods.filter((food) => food._id !== foodId));
       toast.success("Food was deleted successfully");
     } catch (error) {
       console.log(error);
@@ -101,16 +101,10 @@ const FoodDashboard = () => {
                 <p>Category: {food.category?.name}</p>
               </div>
               <div className="food-actions">
-                <button
-                  onClick={() => openEditModal(food)}
-                  className="edit-button"
-                >
+                <button onClick={() => openEditModal(food)} className="edit">
                   Edit
                 </button>
-                <button
-                  onClick={() => deleteFood(food._id)}
-                  className="delete-button"
-                >
+                <button onClick={() => deleteFood(food._id)} className="delete">
                   Delete
                 </button>
               </div>
@@ -148,8 +142,10 @@ const FoodDashboard = () => {
                 setSelectedFood({ ...selectedFood, image: e.target.value })
               }
             />
-            <button type="submit">Save Changes</button>
-            <button type="button" onClick={closeEditModal}>
+            <button type="submit" className="save">
+              Save Changes
+            </button>
+            <button type="button" onClick={closeEditModal} className="cancel">
               Cancel
             </button>
           </form>

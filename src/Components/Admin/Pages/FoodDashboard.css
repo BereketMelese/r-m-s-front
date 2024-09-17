@@ -1,6 +1,7 @@
 .dashboard-container {
   padding: 20px;
   margin-left: 300px;
+  max-width: 1200px;
 }
 
 .dashboard-title {
@@ -10,7 +11,7 @@
 
 .food-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 
@@ -21,12 +22,15 @@
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .food-image {
   width: 100%;
   height: 150px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .food-info {
@@ -36,25 +40,42 @@
 .food-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: auto;
+  gap: 10px;
 }
 
-.edit-button,
-.delete-button {
+.edit,
+.delete {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
+  opacity: 0.8;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.edit-button {
+.edit {
   background: #4caf50;
   color: white;
 }
 
-.delete-button {
+.edit:hover {
+  background: #4caf50;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.delete {
   background: #f44336;
   color: white;
+}
+
+.delete:hover {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  background: #f44336;
+  opacity: 1;
 }
 
 /* Edit Modal Styling */
@@ -68,7 +89,8 @@
   border-radius: 8px;
   z-index: 1000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
 }
 
 .edit-modal-content {
@@ -89,26 +111,34 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.3s ease;
 }
 
-.edit-modal-content button[type="submit"] {
+.save {
   background: #4caf50;
   color: white;
 }
-
-.edit-modal-content button[type="button"] {
-  background: #f44336;
-  color: white;
-  margin-left: 10px;
-}
-
-button {
-  transition: all 0.3s ease;
-  opacity: 0.8;
-}
-
-button:hover {
+.save:hover {
+  background: #4caf50;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
   opacity: 1;
+}
+
+.cancel {
+  background: #f44336;
+  color: white;
+}
+.cancel:hover {
+  background: #f44336;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin-left: 0;
+  }
 }

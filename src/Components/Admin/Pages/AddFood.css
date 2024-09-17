@@ -7,31 +7,28 @@
 }
 
 .add-food {
-  min-width: 600px;
-  margin-top: 30px;
-  padding: 20px;
   background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem;
 }
 
 .title {
-  font-size: 24px;
-  margin-bottom: 20px;
   text-align: center;
-  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  /* gap: 10px;      */
 }
 
 .form .input {
-  display: flex;
-  flex-direction: column;
-  /* gap: 5px; */
+  margin-bottom: 1rem;
 }
 
 .form label {
@@ -44,7 +41,6 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
 }
 
 .form input:focus,
@@ -54,14 +50,14 @@
 }
 
 button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 25px;
+  background-color: #28a745;
   color: white;
-  font-size: 16px;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:disabled {
@@ -70,5 +66,37 @@ button:disabled {
 }
 
 button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .body {
+    margin-left: 0;
+  }
+  .add-food {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .body {
+    margin-left: 0;
+  }
+  .add-food {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  button {
+    padding: 0.6rem;
+  }
 }

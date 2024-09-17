@@ -59,12 +59,6 @@ const Auth = () => {
 
     if (isLoginMode) {
       try {
-        const payload = {
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        };
-        console.log("Request Payload:", payload);
-
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/login",
           "POST",
@@ -88,8 +82,6 @@ const Auth = () => {
           password: formState.inputs.password.value,
           email: formState.inputs.email.value,
         };
-
-        console.log(formData);
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/register",
           "POST",
